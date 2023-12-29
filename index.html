@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="PanGu-Draw: Advancing Resource-Efficient Text-to-Image Synthesis with Time-Decoupled Training and Reusable Coop-Diffusion">
+  <meta name="keywords" content="Text2Image, Image-Generation">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PanGu-Draw: Advancing Resource-Efficient Text-to-Image Synthesis with Time-Decoupled Training and Reusable Coop-Diffusion</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/figures/favicon.ico"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">PanGu-Draw: Advancing Resource-Efficient Text-to-Image Synthesis with Time-Decoupled Training and Reusable Coop-Diffusion</h1>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Guansong Lu<sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Yuanfan Guo<sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Jianhua Han<sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Minzhe Niu<sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Yihan Zeng<sup>1</sup>
+            </span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              Songcen Xu<sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Zeyi Huang<sup>2</sup>,
+            </span>
+            <span class="author-block">
+              Zhao Zhong<sup>2</sup>,
+            </span>
+            <span class="author-block">
+              Wei Zhang<sup>1</sup>,
+            </span>
+            <span class="author-block">
+              Hang Xu<sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Huawei Noah's Ark Lab,</span>
+            <span class="author-block"><sup>2</sup>Huawei</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://arxiv.org/abs/2312.16486"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/mindspore-lab/mindone/tree/master/examples/pangu_draw_v3"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container">
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item item-chair-tp" style="text-align: center;">
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 96px">
+            <div class="item-prompt">“一位年轻女性，身着优雅礼服，佩戴毕业帽，微笑着面对镜头，伸出手臂，她的背景是夕阳下的校园。”</div>
+            <div class="item-prompt">“A young woman, wearing an elegant gown and graduation cap, smiles at the camera and extends her arms, with the sunset on campus in the background.”</div>
+          </div>
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 450px">
+            <img src="./static/figures/1.png" style="max-height:100%; " />
+          </div>
+        </div>
+        <div class="item item-chair-tp" style="text-align: center;">
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 96px">
+            <div class="item-prompt">“一位面带微笑的女子，身穿白色T恤，红色夹克在阳光下熠熠生辉，画面清新，风格像动漫，细节丰富。”</div>
+            <div class="item-prompt">“A smiling woman wearing a white T-shirt and a red jacket shines in the sun. The picture is fresh, anime-like in style, and rich in details.”</div>
+          </div>
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 450px">
+            <img src="./static/figures/2.png" style="max-height:100%; " />
+          </div>
+        </div>
+        <div class="item item-chair-tp" style="text-align: center;">
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 96px">
+            <div class="item-prompt">“一个巨大的水晶球，内部蕴含着一个微型雨林，雨林中蝴蝶飞舞，阳光透过树叶洒落。”</div>
+            <div class="item-prompt">“A huge crystal ball contains a miniature rainforest inside, with butterflies flying in the rainforest and sunlight shining through the leaves.”</div>
+          </div>
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 450px">
+            <img src="./static/figures/3.png" style="max-height:100%; " />
+          </div>
+        </div>
+        <div class="item item-chair-tp" style="text-align: center;">
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 96px">
+            <div class="item-prompt">“一只穿着中世纪铠甲的兔子，手持长剑站在一座古老城堡的城墙上，背后是落日的余晖。”</div>
+            <div class="item-prompt">“A rabbit wearing medieval armor and holding a sword stands on the wall of an ancient castle with the setting sun behind him.”</div>
+          </div>
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 450px">
+            <img src="./static/figures/4.png" style="max-height:100%; " />
+          </div>
+        </div>
+        <div class="item item-chair-tp" style="text-align: center;">
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 96px">
+            <div class="item-prompt">“赛博朋克风格的摄影机，无人机在夜空中飞行，以粒子水墨画风展现，具有强烈的光影效果。”</div>
+            <div class="item-prompt">“Cyberpunk style camera, drone flying in the night sky, presented in particle ink painting style, with strong light and shadow effects.”</div>
+          </div>
+          <div class="prompt" style="flex-direction: column; justify-content: center; height: 450px">
+            <img src="./static/figures/5.png" style="max-height:99%; " />
+          </div>
+        </div>
+        <div class="item item-chair-tp" style="text-align: center;">
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 96px">
+            <div class="item-prompt">“一艘古老的海盗船，完全由糖果和巧克力制成。”</div>
+            <div class="item-prompt">“An ancient pirate ship made entirely of candy and chocolate.”</div>
+          </div>
+          <div class="prompt" style="flex-direction: column; justify-content: center; height: 450px">
+            <img src="./static/figures/9.png" style="max-height:99%; " />
+          </div>
+        </div>
+        <div class="item item-chair-tp" style="text-align: center;">
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 96px">
+            <div class="item-prompt">“旅行者们泛舟在波光粼粼的湖面上，周围是雄伟的山脉，以中国水墨画风格描绘，画面色彩淡雅，具有古典诗意。”</div>
+            <div class="item-prompt">“Travelers are boating on the sparkling lake, surrounded by majestic mountains, painted in the style of Chinese ink painting, with elegant colors and a classical poetic feel.”</div>
+          </div>
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 450px">
+            <img src="./static/figures/6.png" style="max-height:100%; " />
+          </div>
+        </div>
+        <div class="item item-chair-tp" style="text-align: center;">
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 96px">
+            <div class="item-prompt">“超大广角下，沙漠、河流、绿洲交相辉映，落日余晖洒满大地，此景宛如摄影艺术家的作品，画面开 阔，色彩丰富。”</div>
+            <div class="item-prompt">“Under the super wide angle, deserts, rivers, and oasis complement each other, and the setting sun fills the earth. This scene is like the work of a photography artist, with a broad picture and rich colors.”</div>
+          </div>
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 450px">
+            <img src="./static/figures/10.png" style="max-height:100%; " />
+          </div>
+        </div>
+        <div class="item item-chair-tp" style="text-align: center;">
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 96px">
+            <div class="item-prompt">“一台未来风格的摩托车，闪耀着霓虹灯，停在夜晚的东京街头。”</div>
+            <div class="item-prompt">“A futuristic motorcycle, shining with neon lights, is parked on the streets of Tokyo at night.”</div>
+          </div>
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 450px">
+            <img src="./static/figures/7.png" style="max-height:100%; " />
+          </div>
+        </div>
+        <div class="item item-chair-tp" style="text-align: center;">
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 96px">
+            <div class="item-prompt">“一座由冰晶和雪花构成的精致城堡，坐落在北极的冰原上。”</div>
+            <div class="item-prompt">“An exquisite castle made of ice crystals and snowflakes, located on the Arctic ice sheet.”</div>
+          </div>
+          <div class="prompt" style="display: flex; flex-direction: column; justify-content: center; height: 450px">
+            <img src="./static/figures/8.png" style="max-height:100%; " />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Current large-scale diffusion models represent a giant leap forward in conditional image synthesis, capable of interpreting diverse cues like text, human poses, and edges. 
+            However, their reliance on substantial computational resources and extensive data collection remains a bottleneck. 
+            On the other hand, the integration of existing diffusion models, each specialized for different controls and operating in unique latent spaces, poses a challenge due to incompatible image resolutions and latent space embedding structures, hindering their joint use.
+            Addressing these constraints, we present <b>"PanGu-Draw"</b>, a novel latent diffusion model designed for resource-efficient text-to-image synthesis that adeptly accommodates multiple control signals. 
+            We first propose a resource-efficient Time-Decoupling Training Strategy, which splits the monolithic text-to-image model into structure and texture generators.
+            Each generator is trained using a regimen that maximizes data utilization and computational efficiency, cutting data preparation by 48% and reducing training resources by 51%.
+            Secondly, we introduce <b>"Coop-Diffusion"</b>, an algorithm that enables the cooperative use of various pre-trained diffusion models with different latent spaces and predefined resolutions within a unified denoising process. This allows for multi-control image synthesis at arbitrary resolutions without the necessity for additional data or retraining.
+            Empirical validations of Pangu-Draw show its exceptional prowess in text-to-image and multi-control image generation, suggesting a promising direction for future model training efficiencies and generation versatility. The largest 5B T2I <b>PanGu-Draw</b> model is released on the Ascend platform.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3">Method</h2>
+    <h2 class="title is-4">Time-Decoupling Training Strategy</h2>
+    <figure>
+      <img src="./static/figures/time-decoupling-training-strategy.png" alt="Time-Decoupling Training Strategy" >
+      <figcaption>Illustration of three multi-stage training strategies and comparison between them in resource efficiency in data, training and inference aspects. Our time-decoupling training strategy significantly surpasses the representative methods of Cascaded Training and Resolution Boost Training in resource efficiency.</figcaption>
+    </figure>
+    <p>We introduce the Time-Decoupling Training Strategy, which divides a comprehensive text-to-image model into two specialized sub-models: a structure generator and a texture generator. The structure generator is responsible for early-stage denoising across larger time steps and focuses on establishing the foundational outlines of the image. Conversely, the texture generator operates during the latter, smaller time steps to elaborate on the textural details. Each generator is half the size of the original and is trained in isolation, which not only alleviates the need for high-memory computation devices but also avoids the complexities associated with model sharding and its accompanying inter-machine communication overhead. Furthermore, the structure generator is trained with high-resolution images and upscaled lower-resolution ones, achieving higher data efficiency and avoid the problem of semantic degeneration; and the texture generator is trained at a lower resolution while still sampling at high resolution, achieving an overall 51% improvement in training efficiency.</p>
+
+    <h2 class="title is-6">Prompt Enhancement LLM with RLAIF Algorithm</h2>
+    <figure>
+      <img src="./static/figures/prompt_enhancement_framework.PNG" alt="Prompt Enhancement LLM with RLAIF Algorithm.">
+      <figcaption>Framework of our prompt enhancement LLM with RLAIF Algorithm.</figcaption>
+    </figure>
+    <p>To further enhance our generation quality, we harness the advanced comprehension abilities of large language models (LLM) to align users’ succinct inputs with the detailed inputs required by the model. Initially, we finetune the LLM using a human-annotated dataset, transforming a succinct prompt into a more enriched version. Subsequently, to optimize for PanGu-Draw, we employ the Reward rAnked FineTuning (RAFT) method, which selects the prompt pairs yielding the highest reward for further fine-tuning.
+    </p>
+
+    <h2 class="title is-6">Controllable Stylized Text-to-Image Generation</h2>
+    <p>While techniques like LoRA allow one to adapt a text-to-image model to a specific style (e.g., human-aesthetic-preferred style, cartoon style), they do not allow one to adjust the degree of the desired style. Inspired by the classifier-free guidance mechanism, we propose to perform controllable stylized text-to-image generation by prepending a special prefix to the original prompt of human-aesthetic-prefer and cartoon samples, denoted as \(c_{aes}\) and \(c_{cartoon}\) respectively, during training. During
+    sampling, we extrapolated the prediction in the direction of \(\epsilon_\theta(z_t, t, c_{style})\) and away from \(\epsilon_\theta(z_t, t, c)\) as follows: 
+    <p style="text-align: center;">
+    \(\hat{\epsilon}_{\theta}(z_t, t, c) = \epsilon_{\theta}(z_t, t, \emptyset) + s \cdot ({\epsilon}_{\theta}(z_t, t, c) - \epsilon_{\theta}(z_t, t, \emptyset)) + s_{style} \cdot ({\epsilon}_{\theta}(z_t, t, c_{style}) - \epsilon_{\theta}(z_t, t, c)) \), 
+    </p>
+    where \(s\) is the classifier-free guidance scale, \(c_{style} \in \{c_{aes}, c_{cartoon}\}\) and \(s_{style}\) is the style guidance scale.
+    </p>
+
+    <h2 class="title is-4">Coop-Diffusion: Multi-Diffusion Fusion Algorithm</h2>
+    <figure>
+      <img src="./static/figures/coop-diffusion.png" alt="Coop-Diffusion: Multi-Diffusion Fusion Algorithm.">
+      <figcaption>Visualization of our Coop-Diffusion algorithm for the cooperative integration of diverse pre-trained diffusion models.</figcaption>
+    </figure>
+    <p>We propose the Coop-Diffusion algorithm to fuse diverse pre-trained diffusion models for multi-control or multi-resolution image generation without training a new model. (a) Existing pre-trained diffusion models, each tailored for specific controls and operating within distinct latent spaces and image resolutions. (b) This sub-module bridges the gap arising from different latent spaces by transforming the model prediction \(\epsilon_t'\) in latent space B to the target latent space A as \(\tilde\epsilon_t\) using the image
+    space as an intermediate. (c) This sub-module bridges the gap arising from different resolutions by performing upsampling on the predicted clean data \(\hat{x}_{0,t}'\). 
+    <!-- The following figure shows the detailed algorithmic pipeline. -->
+    </p>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3">Quantitative Results</h2>
+    <table>
+      <tr>
+        <td style="border: none; font-style: italic; vertical-align: bottom; width: 50%">Comparisons of PanGu-Draw with English text-to-image generation models on COCO dataset in terms of FID. Our 5B PanGu model is the best-released model in terms of FID.</td>
+        <td style="border: none; font-style: italic; vertical-align: bottom; width: 50%">Comparisons of PanGu-Draw with Chinese text-to-image generation models on COCO-CN dataset in terms of FID, IS and CN-CLIP-score. </td>
+      </tr>
+      <tr>
+        <td style="padding: 0; text-align: center"><img src="./static/figures/quantitative_comparison.PNG" alt="Quantitative comparison."></td>
+        <td style="padding: 0; text-align: center"><img src="./static/figures/quantitative_comparison_2.PNG" alt="Quantitative comparison."></td>
+      </tr>
+    </table>
+    <!-- <figure>
+      <figcaption>Comparisons of PanGu-Draw with recent representative English text-to-image generation models on COCO dataset in terms of FID. PanGu-Draw achieves a FID of 7.99, which is superior to compared methods such as DALL-E 2 and SDXL. It also achieves competitive FID with SOTA methods, indicating the effectiveness of our time-decoupling training strategy and its outstanding data and training efficiencies. Our 5B PanGu model is the best-released model in terms of FID.</figcaption>
+      <img src="./static/figures/quantitative_comparison.PNG" alt="Quantitative comparison.">
+    </figure>
+
+    <figure>
+      <figcaption>Comparisons of PanGu-Draw with Chinese text-to-image generation models on COCO-CN dataset in terms of FID, IS and CN-CLIP-score. PanGu-Draw outperforms other released Chinese text-to-image models, including Taiyi-CN, Taiyi-Bilingual, and AltDiffusion, across all three metrics. This performance highlights PanGu-Draw’s exceptional Chinese text-to-image generation capabilities and the effectiveness of our bilingual text encoder architecture.</figcaption>
+      <img src="./static/figures/quantitative_comparison_2.PNG" alt="Quantitative comparison.">
+    </figure>
+ -->
+    <figure>
+      <figcaption>Results of user study on ImageVal-prompt in terms of image-text alignment, image fidelity, and aesthetics. PanGu-Draw achieves better results than SD and SDXL across all three metrics. It also attains competitive performance of Midjourney 5.2 and DALL-E 3, indicating PanGu-Draw’s excellent text-to-image capabilities. </figcaption>
+      <img src="./static/figures/quantitative_comparison_3.PNG" alt="Quantitative comparison.">
+    </figure>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title is-3">Qualitative Results</h2>
+    <h2 class="title is-4">Text-to-Image Generation</h2>
+    <figure>
+      <img src="./static/figures/main_result.png">
+      <figcaption>Images generated with PanGu-Draw, our 5B multi-lingual text-to-image generation model. PanGu-Draw is able to generate multi-resolution high-fidelity images semantically aligned with the input prompts.</figcaption>
+    </figure>
+
+    <h2 class="title is-6">Prompt Enhancement LLM with RLAIF Algorithm</h2>
+    <figure>
+      <img src="./static/figures/prompt_enhancement.png" width=700px>
+      <figcaption>Text-to-image generation results without and with prompt enhancement. Enriched text improve image generation by better image aesthetic perception (left), more detailed background (middle) and better interpretation of abstract concepts (right).</figcaption>
+    </figure>
+
+    <h2 class="title is-6">Controllable Stylized Text-to-Image Generation</h2>
+    <figure>
+      <img src="./static/figures/stylized_text_to_image.png" width=700px>
+      <figcaption>Controllable stylized text-to-image generation results of PanGu-Draw. PanGu-Draw can control the generated images towards the desired style with the style guidance scale. \(s_{aes}\) for human-aesthetic-prefer style and \(s_{cartoon}\) for cartoon style.</figcaption>
+    </figure>
+
+    <h2 class="title is-4">Multi-Diffusion Fusing Results</h2>
+    <figure>
+      <img src="./static/figures/text_and_image_to_image.png" width=700px>
+      <figcaption>Generation results of the fusing of an image variation model and PanGu-Draw and with the proposed Coop-Diffusion algorithm.</figcaption>
+    </figure>
+    <figure>
+      <img src="./static/figures/text_and_pose_to_image.png" width=700px>
+      <figcaption>Generation results guided by fusing signals of text and pose/edge map by our Coop-Diffusion algorithm.</figcaption>
+    </figure>
+    <figure>
+      <img src="./static/figures/coop-diffusion-2.png" width=500px>
+      <figcaption>Images generated with a low-resolution (LR) model (first row: text-to-image model; second row: Edge-to-image Control- Net) and the fusion of the LR model and HR PanGu-Draw with our Coop-Diffusion algorithm. This allows for single-stage super-resolution for better details and higher inference efficiency.</figcaption>
+    </figure>
+
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{lu2023pangudraw,
+  title={PanGu-Draw: Advancing Resource-Efficient Text-to-Image Synthesis with Time-Decoupled Training and Reusable Coop-Diffusion},
+  author={Guansong Lu and Yuanfan Guo and Jianhua Han and Minzhe Niu and Yihan Zeng and Songcen Xu and Zeyi Huang and Zhao Zhong and Wei Zhang and Hang Xu},
+  journal={arXiv preprint arXiv:2312.16486},
+  year={2023}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="https://arxiv.org/pdf/2312.16486.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/mindspore-lab/mindone/tree/master/examples/pangu_draw_v3" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website template credit to <a href="https://nerfies.github.io/">Nerfies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
